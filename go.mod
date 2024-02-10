@@ -1,4 +1,4 @@
-module github.com/sparhokm/goCourceAuth
+module github.com/sparhokm/go-course-ms-auth
 
 go 1.21
 

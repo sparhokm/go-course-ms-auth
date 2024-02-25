@@ -16,7 +16,7 @@ service UserV1 {
 }
 
 message CreateIn {
-  UserIno userInfo = 1;
+  UserInfo userInfo = 1;
   NewPassword password = 2;
 }
 
@@ -30,12 +30,12 @@ message GetIn {
 
 message GetOut {
   int64 id = 1;
-  UserIno userInfo = 2;
+  UserInfo userInfo = 2;
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 }
 
-message UserIno {
+message UserInfo {
   string name = 1;
   string email = 2;
   Role role = 3;
@@ -45,7 +45,7 @@ message UpdateIn {
   int64 id = 1;
   google.protobuf.StringValue name = 2;
   google.protobuf.StringValue email = 3;
-  Role role = 4;
+  optional Role role = 4;
 }
 
 message DeleteIn {

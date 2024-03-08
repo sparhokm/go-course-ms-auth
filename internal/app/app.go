@@ -7,13 +7,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	grpcapp "github.com/sparhokm/go-course-ms-auth/internal/app/grpc"
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db/pg"
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db/transaction"
 	"github.com/sparhokm/go-course-ms-auth/internal/config"
 	"github.com/sparhokm/go-course-ms-auth/internal/repository/deletedUser"
 	userRepo "github.com/sparhokm/go-course-ms-auth/internal/repository/user"
 	"github.com/sparhokm/go-course-ms-auth/internal/service"
 	"github.com/sparhokm/go-course-ms-auth/internal/service/user"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db/pg"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db/transaction"
 )
 
 type App struct {

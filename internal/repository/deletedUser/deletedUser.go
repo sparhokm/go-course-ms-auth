@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
 )
 
 const (

@@ -6,8 +6,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
 
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db"
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db/pg"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db/pg"
 )
 
 type manager struct {

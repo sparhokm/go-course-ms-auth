@@ -1,6 +1,7 @@
 LOCAL_BIN:=$(CURDIR)/bin
+PROJECT = github.com/sparhokm/go-course-ms-auth
 
-init: docker-down local-env-build docker-up docker-pull docker-build \
+init: local-env-build docker-down docker-pull docker-build docker-up  \
 	  wait-db db-migrations-up
 up: docker-up
 down: docker-down
@@ -46,6 +47,7 @@ install-golangci-lint:
 install-deps:
 	GOBIN=$(LOCAL_BIN) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.32.0
 	GOBIN=$(LOCAL_BIN) go install -mod=mod google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.3.0
+	GOBIN=$(LOCAL_BIN) go install -mod=mod github.com/vektra/mockery/v2@v2.42.0
 
 get-deps:
 	go get -u google.golang.org/protobuf/cmd/protoc-gen-go
@@ -58,6 +60,9 @@ fmt:
 lint:
 	$(LOCAL_BIN)/golangci-lint run ./... --config .golangci.pipeline.yaml
 
+mockery:
+	$(LOCAL_BIN)/mockery
+
 generate:
 	make generate-user-api
 
@@ -69,3 +74,15 @@ generate-user-api:
 	--go-grpc_out=pkg/user_v1 --go-grpc_opt=paths=source_relative \
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	api/user_v1/user.proto
+
+test:
+	go test ./... | grep -v "no test files"
+
+test-coverage:
+	go clean -testcache
+	go test ./... -coverprofile=coverage.tmp.out -covermode count -coverpkg=$(PROJECT)/internal/service/...,$(PROJECT)/internal/rpc/... -count 5
+	grep -v 'mocks\|config' coverage.tmp.out  > coverage.out
+	rm coverage.tmp.out
+	go tool cover -html=coverage.out;
+	go tool cover -func=./coverage.out | grep "total";
+	rm coverage.out

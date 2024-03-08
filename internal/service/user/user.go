@@ -3,8 +3,8 @@ package user
 import (
 	"context"
 
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db"
 	"github.com/sparhokm/go-course-ms-auth/internal/model/user"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
 )
 
 type service struct {

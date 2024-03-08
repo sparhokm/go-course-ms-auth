@@ -1,9 +1,9 @@
 package pg
 
 import (
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db"
-
 	"github.com/jackc/pgx/v5/pgxpool"
+
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
 )
 
 type pgClient struct {

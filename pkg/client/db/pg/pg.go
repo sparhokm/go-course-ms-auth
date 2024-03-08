@@ -10,8 +10,8 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db"
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db/prettier"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db/prettier"
 )
 
 type key string

@@ -11,6 +11,10 @@ type server struct {
 	user UserService
 }
 
+func NewImplementation(user UserService) *server {
+	return &server{user: user}
+}
+
 func Register(gRPCServer *grpc.Server, user UserService) {
-	desc.RegisterUserV1Server(gRPCServer, &server{user: user})
+	desc.RegisterUserV1Server(gRPCServer, NewImplementation(user))
 }

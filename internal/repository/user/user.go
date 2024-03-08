@@ -6,9 +6,9 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/sparhokm/go-course-ms-auth/internal/client/db"
 	model "github.com/sparhokm/go-course-ms-auth/internal/model/user"
 	repoModel "github.com/sparhokm/go-course-ms-auth/internal/repository/user/model"
+	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
 )
 
 const (
@@ -44,7 +44,7 @@ func (r *repo) Save(ctx context.Context, info *model.Info, passwordHash string) 
 	var id int64
 	err = r.db.DB().ScanOneContext(ctx, &id, db.Query{Name: "user.save", QueryRaw: query}, args...)
 	if err != nil {
-		return 0, fmt.Errorf("failed to insert note: %v", err)
+		return 0, fmt.Errorf("failed to save user: %v", err)
 	}
 
 	return id, nil
@@ -66,7 +66,7 @@ func (r *repo) Update(ctx context.Context, id int64, info *model.Info) error {
 
 	_, err = r.db.DB().ExecContext(ctx, db.Query{Name: "user.update", QueryRaw: query}, args...)
 	if err != nil {
-		return fmt.Errorf("failed to insert note: %v", err)
+		return fmt.Errorf("failed to update user: %v", err)
 	}
 
 	return nil
@@ -84,7 +84,7 @@ func (r *repo) Delete(ctx context.Context, id int64) error {
 
 	_, err = r.db.DB().ExecContext(ctx, db.Query{Name: "user.delete", QueryRaw: query}, args...)
 	if err != nil {
-		return fmt.Errorf("failed to insert user: %v", err)
+		return fmt.Errorf("failed to delete user: %v", err)
 	}
 
 	return nil

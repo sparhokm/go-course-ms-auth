@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/sparhokm/go-course-ms-auth/internal/rpc/user"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
+	"github.com/sparhokm/go-course-ms-auth/internal/rpc/user"
 	userServiceMock "github.com/sparhokm/go-course-ms-auth/internal/rpc/user/mocks"
 	desc "github.com/sparhokm/go-course-ms-auth/pkg/user_v1"
 )

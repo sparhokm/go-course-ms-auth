@@ -81,7 +81,7 @@ test:
 test-coverage:
 	go clean -testcache
 	go test ./... -coverprofile=coverage.tmp.out -covermode=count -coverpkg=$(PROJECT)/... -count=5
-	grep -v 'mocks\|config\|/pkg/user_v1' coverage.tmp.out  > coverage.out
+	grep -v 'mocks\|config\|/pkg/user_v1\|/cmd\|/internal/app' coverage.tmp.out  > coverage.out
 	rm coverage.tmp.out
 	go tool cover -html=coverage.out;
 	go tool cover -func=./coverage.out | grep "total";
@@ -89,5 +89,5 @@ test-coverage:
 
 test-coverage-ci:
 	go test ./... -coverprofile=coverage.tmp.out -covermode=atomic -coverpkg=$(PROJECT)/... -race -count=5
-	grep -v 'mocks\|config\|/pkg/user_v1' coverage.tmp.out  > coverage.out
+	grep -v 'mocks\|config\|/pkg/user_v1\|/cmd\|/internal/app' coverage.tmp.out  > coverage.out
 	rm coverage.tmp.out

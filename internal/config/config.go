@@ -11,8 +11,10 @@ import (
 )
 
 type Config struct {
-	GRPCConfig GRPCConfig
-	PGConfig   PGConfig
+	GRPCConfig         GRPCConfig
+	PGConfig           PGConfig
+	AccessTokenConfig  TokenConfig
+	RefreshTokenConfig TokenConfig
 }
 
 func MustLoad() *Config {
@@ -33,7 +35,22 @@ func MustLoad() *Config {
 		log.Fatalf("failed to get pg config: %v", err)
 	}
 
-	return &Config{GRPCConfig: grpcConfig, PGConfig: pgConfig}
+	accessTokenConfig, err := env.NewAccessTokenConfig()
+	if err != nil {
+		log.Fatalf("failed to get access token config: %v", err)
+	}
+
+	refreshTokenConfig, err := env.NewRefreshTokenConfig()
+	if err != nil {
+		log.Fatalf("failed to get access token config: %v", err)
+	}
+
+	return &Config{
+		GRPCConfig:         grpcConfig,
+		PGConfig:           pgConfig,
+		AccessTokenConfig:  accessTokenConfig,
+		RefreshTokenConfig: refreshTokenConfig,
+	}
 }
 
 func fetchConfigPath() string {

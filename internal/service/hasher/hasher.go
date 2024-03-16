@@ -1,4 +1,4 @@
-package service
+package hasher
 
 import (
 	"fmt"
@@ -6,8 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type hasher struct {
-}
+type hasher struct{}
 
 func NewHasher() *hasher {
 	return &hasher{}
@@ -20,4 +19,8 @@ func (h hasher) Hash(password string) (string, error) {
 	}
 
 	return string(hash), nil
+}
+
+func (h hasher) Verify(hash string, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 }

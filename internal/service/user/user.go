@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 
 	"github.com/sparhokm/go-course-ms-auth/internal/model/user"
 	"github.com/sparhokm/go-course-ms-auth/pkg/client/db"
@@ -24,6 +25,11 @@ func NewUserService(userRepo UserRepo, userDeletedRepo DeletedUserRepo, hasher H
 }
 
 func (u service) Create(ctx context.Context, userInfo *user.Info, newPassword *user.Password) (int64, error) {
+	userModel, _ := u.userRepo.GetByEmail(ctx, userInfo.Email)
+	if userModel != nil {
+		return 0, errors.New("email exist")
+	}
+
 	passwordHash, err := u.hasher.Hash(newPassword.GetPassword())
 	if err != nil {
 		return 0, err

@@ -8,9 +8,13 @@ import (
 
 	grpcapp "github.com/sparhokm/go-course-ms-auth/internal/app/grpc"
 	"github.com/sparhokm/go-course-ms-auth/internal/config"
+	accessRepo "github.com/sparhokm/go-course-ms-auth/internal/repository/access"
 	"github.com/sparhokm/go-course-ms-auth/internal/repository/deletedUser"
 	userRepo "github.com/sparhokm/go-course-ms-auth/internal/repository/user"
-	"github.com/sparhokm/go-course-ms-auth/internal/service"
+	"github.com/sparhokm/go-course-ms-auth/internal/service/access"
+	"github.com/sparhokm/go-course-ms-auth/internal/service/auth"
+	"github.com/sparhokm/go-course-ms-auth/internal/service/hasher"
+	"github.com/sparhokm/go-course-ms-auth/internal/service/tokenGenerator"
 	"github.com/sparhokm/go-course-ms-auth/internal/service/user"
 	"github.com/sparhokm/go-course-ms-auth/pkg/client/db/pg"
 	"github.com/sparhokm/go-course-ms-auth/pkg/client/db/transaction"
@@ -37,13 +41,19 @@ func NewApp(ctx context.Context, config *config.Config) (*App, error) {
 	dbClient := pg.New(dbc)
 
 	uRepo := userRepo.NewRepository(dbClient)
+	aRepo := accessRepo.NewRepository(dbClient)
 	deletedUserRepo := deletedUser.NewRepository(dbClient)
 	txManager := transaction.NewTransactionManager(dbClient.DB())
 
-	passwordHasher := service.NewHasher()
-	userService := user.NewUserService(uRepo, deletedUserRepo, passwordHasher, txManager)
+	passwordHasher := hasher.NewHasher()
+	accessTokenGenerator := tokenGenerator.NewTokenGenerator(config.AccessTokenConfig.GetSecret(), config.AccessTokenConfig.GetTimeDuration())
+	refreshTokenGenerator := tokenGenerator.NewTokenGenerator(config.RefreshTokenConfig.GetSecret(), config.RefreshTokenConfig.GetTimeDuration())
 
-	a.GRPCServer = grpcapp.New(config.GRPCConfig, userService)
+	userService := user.NewUserService(uRepo, deletedUserRepo, passwordHasher, txManager)
+	authService := auth.NewAuthService(uRepo, passwordHasher, accessTokenGenerator, refreshTokenGenerator)
+	accessService := access.NewAccessService(accessTokenGenerator, aRepo)
+
+	a.GRPCServer = grpcapp.New(config.GRPCConfig, userService, authService, accessService)
 	return a, nil
 }
 

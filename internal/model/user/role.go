@@ -30,3 +30,7 @@ func NewRole(code string) (*Role, error) {
 func (r Role) GetCode() string {
 	return string(r)
 }
+
+func (r Role) EqualTo(role *Role) bool {
+	return role.GetCode() == r.GetCode()
+}

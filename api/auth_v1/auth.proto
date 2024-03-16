@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package auth_v1;
+
+option go_package = "github.com/sparhokm/go-course-ms-auth/pkg/auth_v1;auth_v1";
+
+service AuthV1 {
+  rpc Login (LoginIn) returns (LoginOut);
+  rpc GetRefreshToken (GetRefreshTokenIn) returns (GetRefreshTokenOut);
+  rpc GetAccessToken (GetAccessTokenIn) returns (GetAccessTokenOut);
+}
+
+message LoginIn {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginOut {
+  string refresh_token = 1;
+}
+
+message GetRefreshTokenIn {
+  string refresh_token = 1;
+}
+
+message GetRefreshTokenOut {
+  string refresh_token = 1;
+}
+
+message GetAccessTokenIn {
+  string refresh_token = 1;
+}
+
+message GetAccessTokenOut {
+  string access_token = 1;
+}

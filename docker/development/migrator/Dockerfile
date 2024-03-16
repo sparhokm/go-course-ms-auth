@@ -11,7 +11,4 @@ RUN chmod +x /usr/local/bin/goose
 COPY ./common/wait-for-it.sh /usr/local/bin/wait-for-it
 RUN chmod +x /usr/local/bin/wait-for-it
 
-COPY ./development/migrator/migrator.sh /usr/local/bin/migration
-RUN chmod +x /usr/local/bin/migration
-
 WORKDIR /root

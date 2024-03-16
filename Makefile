@@ -29,6 +29,9 @@ docker-build:
 wait-db:
 	docker-compose run --rm --no-deps migrator wait-for-it db:5432 -t 30
 
+fixtures:
+	docker-compose run --rm --no-deps migrator goose -dir migrations/fixtures up -v
+
 db-migrations-create:
 	docker-compose run --rm --no-deps migrator goose -dir migrations create $(filter-out $@,$(MAKECMDGOALS)) sql
 
@@ -63,8 +66,7 @@ lint:
 mockery:
 	$(LOCAL_BIN)/mockery
 
-generate:
-	make generate-user-api
+generate: generate-user-api generate-auth-api generate-access-api
 
 generate-user-api:
 	mkdir -p pkg/user_v1
@@ -74,6 +76,24 @@ generate-user-api:
 	--go-grpc_out=pkg/user_v1 --go-grpc_opt=paths=source_relative \
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	api/user_v1/user.proto
+
+generate-auth-api:
+	mkdir -p pkg/auth_v1
+	protoc --proto_path api/auth_v1 \
+	--go_out=pkg/auth_v1 --go_opt=paths=source_relative \
+	--plugin=protoc-gen-go=bin/protoc-gen-go \
+	--go-grpc_out=pkg/auth_v1 --go-grpc_opt=paths=source_relative \
+	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
+	api/auth_v1/auth.proto
+	
+generate-access-api:
+	mkdir -p pkg/access_v1
+	protoc --proto_path api/access_v1 \
+	--go_out=pkg/access_v1 --go_opt=paths=source_relative \
+	--plugin=protoc-gen-go=bin/protoc-gen-go \
+	--go-grpc_out=pkg/access_v1 --go-grpc_opt=paths=source_relative \
+	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
+	api/access_v1/access.proto
 
 test:
 	go test ./... | grep -v "no test files"

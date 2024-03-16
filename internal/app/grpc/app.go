@@ -8,6 +8,8 @@ import (
 	"google.golang.org/grpc/reflection"
 
 	"github.com/sparhokm/go-course-ms-auth/internal/config"
+	"github.com/sparhokm/go-course-ms-auth/internal/rpc/access"
+	"github.com/sparhokm/go-course-ms-auth/internal/rpc/auth"
 	"github.com/sparhokm/go-course-ms-auth/internal/rpc/user"
 )
 
@@ -16,10 +18,17 @@ type App struct {
 	config     config.GRPCConfig
 }
 
-func New(config config.GRPCConfig, userService user.UserService) *App {
+func New(
+	config config.GRPCConfig,
+	userService user.UserService,
+	authService auth.AuthService,
+	accessService access.AccessService,
+) *App {
 	gRPCServer := grpc.NewServer()
 	reflection.Register(gRPCServer)
 	user.Register(gRPCServer, userService)
+	auth.Register(gRPCServer, authService)
+	access.Register(gRPCServer, accessService)
 
 	return &App{
 		gRPCServer: gRPCServer,

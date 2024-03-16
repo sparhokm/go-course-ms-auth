@@ -12,3 +12,7 @@ type UserService interface {
 	Update(ctx context.Context, id int64, name *string, email *string, role *user.Role) error
 	Delete(ctx context.Context, id int64) error
 }
+
+type TokenGenerator interface {
+	GenerateToken(id int64, role user.Role) (string, error)
+}

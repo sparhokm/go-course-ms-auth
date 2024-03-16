@@ -25,7 +25,8 @@ func ToUserFromRepo(user *repoModel.User) (*model.User, error) {
 			Email: user.Info.Email,
 			Role:  *role,
 		},
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: updatedAt,
+		PasswordHash: user.PasswordHash,
+		CreatedAt:    user.CreatedAt,
+		UpdatedAt:    updatedAt,
 	}, nil
 }

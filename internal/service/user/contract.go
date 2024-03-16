@@ -10,6 +10,7 @@ type UserRepo interface {
 	Save(ctx context.Context, info *user.Info, passwordHash string) (int64, error)
 	Delete(ctx context.Context, id int64) error
 	Get(ctx context.Context, id int64) (*user.User, error)
+	GetByEmail(ctx context.Context, email string) (*user.User, error)
 	Update(ctx context.Context, id int64, info *user.Info) error
 }
 

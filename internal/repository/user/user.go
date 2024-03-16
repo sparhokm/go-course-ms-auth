@@ -110,3 +110,24 @@ func (r *repo) Get(ctx context.Context, id int64) (*model.User, error) {
 
 	return ToUserFromRepo(&repoUser)
 }
+
+func (r *repo) GetByEmail(ctx context.Context, email string) (*model.User, error) {
+	builder := sq.Select("*").
+		PlaceholderFormat(sq.Dollar).
+		From(tableName).
+		Where(sq.Eq{emailColumn: email}).
+		Limit(1)
+
+	query, args, err := builder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var repoUser repoModel.User
+	err = r.db.DB().ScanOneContext(ctx, &repoUser, db.Query{Name: "user.get", QueryRaw: query}, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return ToUserFromRepo(&repoUser)
+}

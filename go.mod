@@ -4,8 +4,10 @@ go 1.21.5
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/jackc/pgx/v5 v5.5.4
 	github.com/joho/godotenv v1.5.1
+	github.com/pkg/errors v0.9.1
 	github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240309064856-04ebda3303f6
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/crypto v0.21.0
@@ -24,7 +26,6 @@ require (
 	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/lib/pq v1.10.2 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
 	golang.org/x/net v0.22.0 // indirect

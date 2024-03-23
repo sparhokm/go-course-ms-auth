@@ -14,6 +14,7 @@ type Config struct {
 	GRPCConfig         GRPCConfig
 	PGConfig           PGConfig
 	AccessTokenConfig  TokenConfig
+	PrometheusConfig   PrometheusConfig
 	RefreshTokenConfig TokenConfig
 }
 
@@ -28,6 +29,11 @@ func MustLoad() *Config {
 	grpcConfig, err := env.NewGRPCConfig()
 	if err != nil {
 		log.Fatalf("failed to get grpc config: %v", err)
+	}
+
+	prometheusConfig, err := env.NewPrometheusConfig()
+	if err != nil {
+		log.Fatalf("failed to get prometheus config: %v", err)
 	}
 
 	pgConfig, err := env.NewPGConfig()
@@ -47,6 +53,7 @@ func MustLoad() *Config {
 
 	return &Config{
 		GRPCConfig:         grpcConfig,
+		PrometheusConfig:   prometheusConfig,
 		PGConfig:           pgConfig,
 		AccessTokenConfig:  accessTokenConfig,
 		RefreshTokenConfig: refreshTokenConfig,

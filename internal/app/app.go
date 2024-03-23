@@ -3,11 +3,17 @@ package app
 import (
 	"context"
 	"fmt"
+	"log/slog"
+	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	grpcapp "github.com/sparhokm/go-course-ms-auth/internal/app/grpc"
+	"github.com/sparhokm/go-course-ms-auth/internal/app/http"
 	"github.com/sparhokm/go-course-ms-auth/internal/config"
+	"github.com/sparhokm/go-course-ms-auth/internal/infra/logger"
+	"github.com/sparhokm/go-course-ms-auth/internal/infra/metric"
+	"github.com/sparhokm/go-course-ms-auth/internal/infra/tracing"
 	accessRepo "github.com/sparhokm/go-course-ms-auth/internal/repository/access"
 	"github.com/sparhokm/go-course-ms-auth/internal/repository/deletedUser"
 	userRepo "github.com/sparhokm/go-course-ms-auth/internal/repository/user"
@@ -22,11 +28,24 @@ import (
 
 type App struct {
 	GRPCServer *grpcapp.App
+	HttpServer *http.App
 	Dbc        *pgxpool.Pool
 }
 
 func NewApp(ctx context.Context, config *config.Config) (*App, error) {
 	a := &App{}
+
+	logger.Init(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo})))
+
+	err := metric.Init()
+	if err != nil {
+		return nil, fmt.Errorf("metric init fail: %v", err)
+	}
+
+	err = tracing.Init()
+	if err != nil {
+		return nil, fmt.Errorf("tracing init fail: %v", err)
+	}
 
 	dbc, err := pgxpool.New(ctx, config.PGConfig.DSN())
 	if err != nil {
@@ -54,6 +73,8 @@ func NewApp(ctx context.Context, config *config.Config) (*App, error) {
 	accessService := access.NewAccessService(accessTokenGenerator, aRepo)
 
 	a.GRPCServer = grpcapp.New(config.GRPCConfig, userService, authService, accessService)
+	a.HttpServer = http.New(config.PrometheusConfig)
+
 	return a, nil
 }
 
@@ -61,9 +82,13 @@ func (a App) Run() {
 	go func() {
 		a.GRPCServer.MustRun()
 	}()
+	go func() {
+		a.HttpServer.MustRun()
+	}()
 }
 
 func (a App) Stop() {
 	a.GRPCServer.Stop()
+	a.HttpServer.Stop()
 	a.Dbc.Close()
 }

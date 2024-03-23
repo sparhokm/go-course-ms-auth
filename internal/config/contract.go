@@ -6,6 +6,10 @@ type GRPCConfig interface {
 	Address() string
 }
 
+type PrometheusConfig interface {
+	Address() string
+}
+
 type PGConfig interface {
 	DSN() string
 }

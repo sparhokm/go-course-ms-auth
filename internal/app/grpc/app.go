@@ -8,6 +8,7 @@ import (
 	"google.golang.org/grpc/reflection"
 
 	"github.com/sparhokm/go-course-ms-auth/internal/config"
+	interceptor "github.com/sparhokm/go-course-ms-auth/internal/incerceptor"
 	"github.com/sparhokm/go-course-ms-auth/internal/rpc/access"
 	"github.com/sparhokm/go-course-ms-auth/internal/rpc/auth"
 	"github.com/sparhokm/go-course-ms-auth/internal/rpc/user"
@@ -24,7 +25,11 @@ func New(
 	authService auth.AuthService,
 	accessService access.AccessService,
 ) *App {
-	gRPCServer := grpc.NewServer()
+	gRPCServer := grpc.NewServer(grpc.ChainUnaryInterceptor(
+		interceptor.LogInterceptor,
+		interceptor.MetricsInterceptor,
+		interceptor.ServerTracingInterceptor,
+	))
 	reflection.Register(gRPCServer)
 	user.Register(gRPCServer, userService)
 	auth.Register(gRPCServer, authService)

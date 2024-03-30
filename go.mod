@@ -4,14 +4,13 @@ go 1.22.1
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
+	github.com/georgysavva/scany/v2 v2.1.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/jackc/pgx/v5 v5.5.4
 	github.com/joho/godotenv v1.5.1
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.19.0
-	github.com/sparhokm/go-course-ms-auth/pkg/access_v1 v0.0.0-20240323055019-5e13d5e1e0cb
-	github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240323055019-5e13d5e1e0cb
 	github.com/stretchr/testify v1.8.4
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
 	golang.org/x/crypto v0.21.0
@@ -24,7 +23,6 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/georgysavva/scany/v2 v2.1.0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect

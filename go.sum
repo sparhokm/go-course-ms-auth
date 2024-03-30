@@ -69,10 +69,8 @@ github.com/prometheus/procfs v0.12.0 h1:jluTpSng7V9hY0O2R9DzzJHYb2xULk9VTR1V1R/k
 github.com/prometheus/procfs v0.12.0/go.mod h1:pcuDEFsWDnvcgNzo4EEweacyhjeA9Zk3cnaOZAZEfOo=
 github.com/rogpeppe/go-internal v1.10.0 h1:TMyTOH3F/DB16zRVcYyreMH6GnZZrwQVAoYjRBZyWFQ=
 github.com/rogpeppe/go-internal v1.10.0/go.mod h1:UQnix2H7Ngw/k4C5ijL5+65zddjncjaFoBhdsK/akog=
-github.com/sparhokm/go-course-ms-auth/pkg/access_v1 v0.0.0-20240317001746-0bc465041cc3 h1:pS5ciCwjPISO4Dg/aFu0V6IRUoWG9T9W/2k9/SERgdk=
-github.com/sparhokm/go-course-ms-auth/pkg/access_v1 v0.0.0-20240317001746-0bc465041cc3/go.mod h1:kIJhzE4eJyt0y8zxPI6tQMmATOyRof7WAQ2v6Q7BB84=
-github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240309064856-04ebda3303f6 h1:AstyYKDq6ErIi+srK3WNMyr7xlrpXxTuun0uYwAYLEY=
-github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240309064856-04ebda3303f6/go.mod h1:2KmL3ibSTiLtbu+kcqPmac+/o/rMxTFn+m6NaR7ubi0=
+github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240323055019-5e13d5e1e0cb h1:nUlO5jLiFs4Jg+1iWotw6hcLFoAdthc4+hh3heIJYuU=
+github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240323055019-5e13d5e1e0cb/go.mod h1:nmjxZ7D1z9yemAnFqGni6/+VWG9p/QyIbJD4AX9lz0s=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
 github.com/stretchr/objx v0.5.0 h1:1zr/of2m5FGMsad5YfcqgdqdWrIhu+EBEJRhR1U7z/c=

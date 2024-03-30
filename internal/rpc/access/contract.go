@@ -5,5 +5,5 @@ import (
 )
 
 type AccessService interface {
-	Check(ctx context.Context, accessToken string, path string) error
+	Check(ctx context.Context, accessToken string, path string) (int64, error)
 }

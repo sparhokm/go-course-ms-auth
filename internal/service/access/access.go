@@ -17,22 +17,22 @@ func NewAccessService(accessTokenVerifier TokenVerifier, accessRepo AccessRepo) 
 	}
 }
 
-func (a service) Check(ctx context.Context, token string, endpoint string) error {
+func (a service) Check(ctx context.Context, token string, endpoint string) (int64, error) {
 	userClaims, err := a.accessTokenVerifier.VerifyToken(token)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	roles, err := a.accessRepo.Get(ctx, endpoint)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	for _, r := range roles {
 		if r.EqualTo(&userClaims.Role) {
-			return nil
+			return userClaims.Id, nil
 		}
 	}
 
-	return errors.New("access denied")
+	return 0, errors.New("access denied")
 }

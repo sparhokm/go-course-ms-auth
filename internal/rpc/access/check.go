@@ -6,14 +6,13 @@ import (
 
 	"github.com/pkg/errors"
 	"google.golang.org/grpc/metadata"
-	"google.golang.org/protobuf/types/known/emptypb"
 
 	desc "github.com/sparhokm/go-course-ms-auth/pkg/access_v1"
 )
 
 const authPrefix = "Bearer "
 
-func (s *server) Check(ctx context.Context, req *desc.CheckIn) (*emptypb.Empty, error) {
+func (s *server) Check(ctx context.Context, req *desc.CheckIn) (*desc.CheckOut, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return nil, errors.New("metadata is not provided")
@@ -30,10 +29,10 @@ func (s *server) Check(ctx context.Context, req *desc.CheckIn) (*emptypb.Empty, 
 
 	accessToken := strings.TrimPrefix(authHeader[0], authPrefix)
 
-	err := s.access.Check(ctx, accessToken, req.GetEndpointAddress())
+	id, err := s.access.Check(ctx, accessToken, req.GetEndpointAddress())
 	if err != nil {
 		return nil, err
 	}
 
-	return &emptypb.Empty{}, nil
+	return &desc.CheckOut{Id: id}, nil
 }

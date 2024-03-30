@@ -10,6 +10,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.19.0
+	github.com/sparhokm/go-course-ms-auth/pkg/access_v1 v0.0.0-20240323055019-5e13d5e1e0cb
 	github.com/sparhokm/go-course-ms-auth/pkg/client v0.0.0-20240323055019-5e13d5e1e0cb
 	github.com/stretchr/testify v1.8.4
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
